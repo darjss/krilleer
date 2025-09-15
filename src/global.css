@@ -52,46 +52,47 @@
 
   .dark,
   [data-kb-theme="dark"] {
-    --color-background: hsl(24 20% 7%);
-    --color-foreground: hsl(45 25% 95%);
+    /* Softer dark theme, closer to light mode */
+    --color-background: hsl(24 16% 12%);
+    --color-foreground: hsl(45 20% 93%);
 
-    --color-muted: hsl(24 20% 14%);
-    --color-muted-foreground: hsl(45 10% 70%);
+    --color-muted: hsl(24 12% 20%);
+    --color-muted-foreground: hsl(45 10% 82%);
 
-    --color-accent: hsl(24 20% 14%);
-    --color-accent-foreground: hsl(45 25% 95%);
+    --color-accent: hsl(24 14% 20%);
+    --color-accent-foreground: hsl(45 20% 93%);
 
-    --color-popover: hsl(24 20% 7%);
-    --color-popover-foreground: hsl(45 25% 95%);
+    --color-popover: hsl(24 16% 12%);
+    --color-popover-foreground: hsl(45 20% 93%);
 
-    --color-border: hsl(24 18% 20%);
-    --color-input: hsl(24 18% 20%);
+    --color-border: hsl(24 14% 32%);
+    --color-input: hsl(24 14% 32%);
 
-    --color-card: hsl(24 20% 9%);
-    --color-card-foreground: hsl(45 25% 95%);
+    --color-card: hsl(24 14% 20%);
+    --color-card-foreground: hsl(45 20% 93%);
 
     --color-primary: hsl(32 95% 55%);
     --color-primary-foreground: hsl(0 0% 10%);
 
-    --color-secondary: hsl(24 20% 14%);
-    --color-secondary-foreground: hsl(45 25% 95%);
+    --color-secondary: hsl(24 14% 22%);
+    --color-secondary-foreground: hsl(45 20% 93%);
 
-    --color-destructive: hsl(0 62% 30%);
+    --color-destructive: hsl(0 62% 38%);
     --color-destructive-foreground: hsl(0 0% 98%);
 
-    --color-info: hsl(226 57% 21%);
-    --color-info-foreground: hsl(199 89% 48%);
+    --color-info: hsl(226 45% 28%);
+    --color-info-foreground: hsl(199 89% 52%);
 
-    --color-success: hsl(165 91% 9%);
-    --color-success-foreground: hsl(160 84% 39%);
+    --color-success: hsl(165 70% 15%);
+    --color-success-foreground: hsl(160 84% 42%);
 
-    --color-warning: hsl(32 70% 22%);
-    --color-warning-foreground: hsl(25 95% 53%);
+    --color-warning: hsl(32 60% 28%);
+    --color-warning-foreground: hsl(25 95% 55%);
 
-    --color-error: hsl(0 75% 16%);
-    --color-error-foreground: hsl(0 84% 60%);
+    --color-error: hsl(0 65% 24%);
+    --color-error-foreground: hsl(0 84% 62%);
 
-    --color-ring: hsl(32 70% 55%);
+    --color-ring: hsl(32 70% 58%);
   }
 
   * {

@@ -2,15 +2,15 @@
 import Layout from '../layouts/Layout.astro';
 import Converter from '../components/converter.tsx';
 
-const pageTitle = "Латин → Кирилл хөрвүүлэгч";
-const pageDescription = "Латин бичгийг кирилл болгож хөрвүүлнэ. Үнэгүй, хурдан, энгийн.";
+const pageTitle = "Монгол латин → кирилл хөрвүүлэгч";
+const pageDescription = "Монгол латин бичгийг кирилл болгон хөрвүүлдэг хялбар хэрэгсэл. Шууд хөрвүүлж, хуулж болно.";
 const ogImage = "/og-image.svg";
 
 const siteUrl = Astro.url.toString();
 const jsonLd = {
 	"@context": "https://schema.org",
 	"@type": "WebApplication",
-	"name": "Латин → Кирилл хөрвүүлэгч",
+	"name": "Монгол латин → кирилл хөрвүүлэгч",
 	"applicationCategory": "UtilityApplication",
 	"operatingSystem": "All",
 	"url": siteUrl,
@@ -26,23 +26,20 @@ const jsonLd = {
 		<script type="application/ld+json" set:html={JSON.stringify(jsonLd)} />
 	</Fragment>
 
-	<div class="min-h-screen bg-background p-6">
+	<div class="min-h-screen bg-background px-6 pt-20 pb-10">
 		<div class="max-w-3xl mx-auto space-y-10">
 			<div class="text-center space-y-4">
-				<div class="inline-block border-2 border-border bg-secondary px-3 py-1 text-xs uppercase tracking-wider shadow-[4px_4px_0_0_rgba(0,0,0,0.12)]">MGL Convert</div>
 				<h1 class="text-4xl sm:text-6xl font-black tracking-tighter text-foreground">
-					Латин → Кирилл хөрвүүлэгч
+					Монгол латин → кирилл хөрвүүлэгч
 				</h1>
 				<p class="max-w-2xl mx-auto text-base sm:text-lg text-foreground/80">
-					Бичихэд л шууд хөрвөнө. Буулгах, хуулах, цэвэрлэх бүгд бий.
+					Латин үсгээр бичсэн монгол текстийг кирилл үсэг рүү шууд хөрвүүлнэ.
 				</p>
 			</div>
 
 			<Converter client:load />
 
-			<div class="text-center text-xs text-muted-foreground">
-				<p>Нээлттэй эхтэй, үнэгүй.</p>
-			</div>
+
 		</div>
 	</div>
 </Layout>

@@ -1,14 +1,15 @@
 ---
 const {
-	title = "Латин → Кирилл хөрвүүлэгч",
-	description = "Латин бичгийг кирилл болгож хөрвүүлнэ. Үнэгүй, хурдан, энгийн.",
+	title = "Монгол латин → кирилл хөрвүүлэгч",
+	description = "Монгол латин бичгийг кирилл болгон хөрвүүлдэг хялбар хэрэгсэл. Шууд хөрвүүлж, хуулж болно.",
 	ogImage,
 	url
 } = Astro.props;
+import "../global.css";
 const canonical = (url ?? Astro.url).toString();
 const siteName = "MGL Convert";
 const ogImageUrl = ogImage ? new URL(ogImage, canonical).toString() : undefined;
-const ogImageAlt = "Латин → Кирилл хөрвүүлэгч — MGL Convert";
+const ogImageAlt = "Монгол латин → кирилл хөрвүүлэгч — MGL Convert";
 const ogImageType = ogImage?.endsWith('.svg') ? 'image/svg+xml' : 'image/png';
 const ogImageWidth = 1200;
 const ogImageHeight = 630;
@@ -36,10 +37,9 @@ const ogImageHeight = 630;
 				else document.documentElement.classList.remove('dark');
 			} catch (e) {}
 		</script>
-		<link rel="stylesheet" href="/src/styles/global.css" />
 		<title>{title}</title>
 		<meta name="description" content={description} />
-		<meta name="keywords" content="латин кирилл хөрвүүлэгч, монгол хэл, латин бичиг кирилл болгох, онлайн хөрвүүлэгч, монгол латин кирилл" />
+		<meta name="keywords" content="монгол латин кирилл хөрвүүлэгч, монгол хэл, латин бичгийг кирилл болгох, онлайн хөрвүүлэгч, монгол латин кирилл, mongol bichig, mongol hurvuulj" />
 		<meta name="author" content="MGL Convert" />
 		<meta name="robots" content="index,follow" />
 		<meta property="og:title" content={title} />
@@ -68,9 +68,21 @@ const ogImageHeight = 630;
 			<div class="absolute left-1/2 top-[-8rem] h-[28rem] w-[40rem] -translate-x-1/2 rounded-full bg-gradient-to-r from-amber-300/35 via-orange-300/25 to-rose-300/30 blur-3xl dark:from-amber-400/25 dark:via-orange-400/20 dark:to-rose-400/25"></div>
 		</div>
 		<slot />
-		<button id="theme-toggle" class="fixed right-4 bottom-4 z-50 inline-flex items-center gap-2 rounded-none border-2 border-input bg-secondary px-3 py-2 text-sm text-secondary-foreground shadow-[4px_4px_0_0_rgba(0,0,0,0.12)] hover:bg-secondary/80 hover:text-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2" aria-label="Toggle theme">
-			<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="h-4 w-4 block dark:hidden" aria-hidden="true"><path d="M12 18a6 6 0 1 0 0-12 6 6 0 0 0 0 12Z"/><path d="M12 2.25a.75.75 0 0 1 .75.75v1.5a.75.75 0 0 1-1.5 0V3a.75.75 0 0 1 .75-.75Zm0 15a.75.75 0 0 1 .75.75v1.5a.75.75 0 0 1-1.5 0V18a.75.75 0 0 1 .75-.75Zm9-6a.75.75 0 0 1-.75.75h-1.5a.75.75 0 0 1 0-1.5H20.25a.75.75 0 0 1 .75.75Zm-15 0a.75.75 0 0 1-.75.75H3.75a.75.75 0 0 1 0-1.5H6a.75.75 0 0 1 .75.75Zm10.78 7.53a.75.75 0 0 1-1.06 0l-1.06-1.06a.75.75 0 1 1 1.06-1.06l1.06 1.06a.75.75 0 0 1 0 1.06Zm-9.44-9.44a.75.75 0 0 1-1.06 0L6.22 9.78A.75.75 0 1 1 7.28 8.72l1.06 1.06a.75.75 0 0 1 0 1.06Zm9.44-4.59a.75.75 0 0 1 0 1.06l-1.06 1.06a.75.75 0 1 1-1.06-1.06l1.06-1.06a.75.75 0 0 1 1.06 0ZM8.34 18.28a.75.75 0 0 1-1.06 0L6.22 17.16a.75.75 0 0 1 1.06-1.06l1.06 1.06c.3.3.3.77 0 1.06Z"/></svg>
-			<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="h-4 w-4 hidden dark:block" aria-hidden="true"><path d="M21.752 15.002A9.718 9.718 0 0 1 12.75 22.5c-5.385 0-9.75-4.365-9.75-9.75 0-4.753 3.353-8.713 7.778-9.583a.75.75 0 0 1 .848 1.02A8.25 8.25 0 0 0 21 14.25c0 .269-.014.535-.04.798a.75.75 0 0 1-.712-.046l-.496-.298Z"/></svg>
+		<button id="theme-toggle" class="fixed right-6 top-6 z-[9999] inline-flex items-center gap-2 rounded-lg border-2 border-border bg-background px-3 py-2 text-sm text-foreground shadow-lg hover:bg-secondary hover:text-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 transition-colors" aria-label="Toggle theme">
+			<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" class="h-4 w-4 block dark:hidden" aria-hidden="true">
+				<circle cx="12" cy="12" r="4"></circle>
+				<line x1="12" y1="2" x2="12" y2="5" stroke-linecap="round"></line>
+				<line x1="12" y1="19" x2="12" y2="22" stroke-linecap="round"></line>
+				<line x1="2" y1="12" x2="5" y2="12" stroke-linecap="round"></line>
+				<line x1="19" y1="12" x2="22" y2="12" stroke-linecap="round"></line>
+				<line x1="4.22" y1="4.22" x2="6.34" y2="6.34" stroke-linecap="round"></line>
+				<line x1="17.66" y1="17.66" x2="19.78" y2="19.78" stroke-linecap="round"></line>
+				<line x1="4.22" y1="19.78" x2="6.34" y2="17.66" stroke-linecap="round"></line>
+				<line x1="17.66" y1="6.34" x2="19.78" y2="4.22" stroke-linecap="round"></line>
+			</svg>
+			<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" class="h-4 w-4 hidden dark:block" aria-hidden="true">
+				<path stroke-linecap="round" stroke-linejoin="round" d="M21 12.79A9 9 0 1 1 11.21 3a7 7 0 0 0 9.79 9.79Z" />
+			</svg>
 			<span class="sr-only">Сэдэв солих</span>
 		</button>
 		<script>
