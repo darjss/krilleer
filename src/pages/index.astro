@@ -1,11 +1,48 @@
 ---
-import Welcome from '../components/Welcome.astro';
 import Layout from '../layouts/Layout.astro';
+import Converter from '../components/converter.tsx';
 
-// Welcome to Astro! Wondering what to do next? Check out the Astro documentation at https://docs.astro.build
-// Don't want to use any of this? Delete everything in this file, the `assets`, `components`, and `layouts` directories, and start fresh.
+const pageTitle = "Латин → Кирилл хөрвүүлэгч";
+const pageDescription = "Латин бичгийг кирилл болгож хөрвүүлнэ. Үнэгүй, хурдан, энгийн.";
+const ogImage = "/og-image.svg";
+
+const siteUrl = Astro.url.toString();
+const jsonLd = {
+	"@context": "https://schema.org",
+	"@type": "WebApplication",
+	"name": "Латин → Кирилл хөрвүүлэгч",
+	"applicationCategory": "UtilityApplication",
+	"operatingSystem": "All",
+	"url": siteUrl,
+	"inLanguage": "mn",
+	"description": pageDescription,
+	"image": ogImage,
+	"offers": { "@type": "Offer", "price": "0", "priceCurrency": "MNT" }
+};
 ---
 
-<Layout>
-	<Welcome />
+<Layout title={pageTitle} description={pageDescription} ogImage={ogImage}>
+	<Fragment slot="head">
+		<script type="application/ld+json" set:html={JSON.stringify(jsonLd)} />
+	</Fragment>
+
+	<div class="min-h-screen bg-background p-6">
+		<div class="max-w-3xl mx-auto space-y-10">
+			<div class="text-center space-y-4">
+				<div class="inline-block border-2 border-border bg-secondary px-3 py-1 text-xs uppercase tracking-wider shadow-[4px_4px_0_0_rgba(0,0,0,0.12)]">MGL Convert</div>
+				<h1 class="text-4xl sm:text-6xl font-black tracking-tighter text-foreground">
+					Латин → Кирилл хөрвүүлэгч
+				</h1>
+				<p class="max-w-2xl mx-auto text-base sm:text-lg text-foreground/80">
+					Бичихэд л шууд хөрвөнө. Буулгах, хуулах, цэвэрлэх бүгд бий.
+				</p>
+			</div>
+
+			<Converter client:load />
+
+			<div class="text-center text-xs text-muted-foreground">
+				<p>Нээлттэй эхтэй, үнэгүй.</p>
+			</div>
+		</div>
+	</div>
 </Layout>

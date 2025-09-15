@@ -1,0 +1,210 @@
+// transliterate-mn.ts
+// Latin (ASCII) -> Mongolian Cyrillic transliterator in TypeScript.
+// Features:
+// - Multigraphs matched longest-first (e.g. "sh", "ch", "ts").
+// - Latin 'i' becomes 'й' when it follows a Cyrillic vowel in output.
+// - Explicit mapping: 'w' -> 'ү', 'q' -> 'ө' (as requested).
+// - Basic capitalization preservation (capitalize first Cyrillic letter
+//   of a token if the source token starts uppercase).
+//
+// Usage:
+//   console.log(transliterateLatinToCyrillic("bayar")); // баяр
+//   console.log(transliterateLatinToCyrillic("shinii")); // шинэй or шинэи depending on i-rule
+//
+// Note: adapt singleMap/multigraphs to match your romanization variant.
+
+export interface TransliterateOptions {
+  preserveCase?: boolean // default true
+  // asciiHarmony not necessary when using explicit w/q for ү/ө,
+  // but kept for optional heuristics if you want o/u -> ө/ү
+  asciiHarmony?: boolean
+}
+
+const CYRILLIC_VOWELS = new Set(["а", "э", "е", "ё", "о", "у", "ү", "ө", "ы", "и", "я", "ю"])
+
+const MULTIGRAPHS: Record<string, string> = {
+  shch: "щ",
+  sch: "щ",
+  kh: "х",
+  ch: "ч",
+  sh: "ш",
+  ts: "ц",
+  yo: "ё",
+  yu: "ю",
+  ya: "я",
+  ye: "е",
+  je: "е",
+  zh: "ж",
+  ng: "нг",
+  dz: "дз",
+  ph: "ф",
+  // add more if needed
+}
+
+const SINGLE_MAP: Record<string, string> = {
+  a: "а",
+  b: "б",
+  v: "в",
+  g: "г",
+  d: "д",
+  e: "э", // plain e -> э (ye/je handled in multigraphs)
+  ë: "ё",
+  z: "з",
+  i: "и", // special-case handled in runtime: may become 'й'
+  j: "ж",
+  y: "й",
+  k: "к",
+  l: "л",
+  m: "м",
+  n: "н",
+  o: "о",
+  p: "п",
+  r: "р",
+  s: "с",
+  t: "т",
+  u: "у",
+  f: "ф",
+  h: "х",
+  c: "ц",
+  q: "ө", // explicit mapping for ө (user requested)
+  w: "ү", // explicit mapping for ү (user requested)
+  x: "кс",
+  "'": "ь",
+  "`": "ь",
+  ".": ".",
+  ",": ",",
+  " ": " ",
+}
+
+// Precompute multigraph keys sorted by length desc so longest match first
+const MULTI_KEYS_DESC = Object.keys(MULTIGRAPHS).sort((a, b) => b.length - a.length)
+
+// Cache for transliteration results
+const transliterationCache = new Map<string, string>()
+const MAX_CACHE_SIZE = 1000
+
+/**
+ * Transliterate a Latin-input string to Mongolian Cyrillic.
+ */
+export function transliterateLatinToCyrillic(input: string, opts?: TransliterateOptions): string {
+  // Check cache first
+  const cacheKey = `${input}|${opts?.preserveCase}|${opts?.asciiHarmony}`
+  if (transliterationCache.has(cacheKey)) {
+    return transliterationCache.get(cacheKey)!
+  }
+
+  const options = {
+    preserveCase: true,
+    asciiHarmony: false,
+    ...opts,
+  }
+
+  // Early return for empty input
+  if (!input) {
+    transliterationCache.set(cacheKey, "")
+    return ""
+  }
+
+  let out = ""
+  const lower = input.toLowerCase()
+
+  // Helper: return whether a given Cyrillic char is a vowel
+  const isCyrVowel = (ch: string) => {
+    if (!ch) return false
+    return CYRILLIC_VOWELS.has(ch.toLowerCase())
+  }
+
+  for (let i = 0; i < input.length; ) {
+    const remaining = lower.slice(i)
+
+    // Try multigraphs (longest first) - optimized with direct lookup
+    let foundMultigraph = false
+    for (const key of MULTI_KEYS_DESC) {
+      if (remaining.startsWith(key)) {
+        const cyr = MULTIGRAPHS[key]
+        // preserve capitalization: if source first char of piece is uppercase,
+        // uppercase the first letter of the cyrillic result.
+        const srcFirst = input[i]
+        const shouldCap = options.preserveCase && srcFirst !== srcFirst.toLowerCase()
+        if (shouldCap && cyr.length > 0) {
+          out += cyr[0].toUpperCase() + cyr.slice(1)
+        } else {
+          out += cyr
+        }
+        i += key.length
+        foundMultigraph = true
+        break
+      }
+    }
+    if (foundMultigraph) continue
+
+    // single character handling
+    const srcCh = input.charAt(i)
+    const lowerCh = lower.charAt(i)
+
+    // special rule: 'i' after a Cyrillic vowel -> 'й' (semivowel)
+    if (lowerCh === "i") {
+      const prevCyr = out[out.length - 1]
+      if (isCyrVowel(prevCyr)) {
+        // produce й, respect capitalization of source char
+        const shouldCap = options.preserveCase && srcCh !== srcCh.toLowerCase()
+        out += shouldCap ? "Й" : "й"
+      } else {
+        const mapped = SINGLE_MAP[lowerCh] ?? srcCh
+        const shouldCap = options.preserveCase && srcCh !== srcCh.toLowerCase()
+        out += shouldCap ? mapped.toUpperCase() : mapped
+      }
+      i += 1
+      continue
+    }
+
+    // asciiHarmony optional handling: if enabled, adapt o/u based on presence
+    // of front vowels in the token (simple heuristic). Since user requested
+    // explicit q/w for ө/ү, asciiHarmony is optional and off by default.
+    if (options.asciiHarmony && (lowerCh === "o" || lowerCh === "u")) {
+      // find token bounds (space/punct delim)
+      const tokenStart = input.lastIndexOf(" ", i) + 1
+      let tokenEnd = input.indexOf(" ", i)
+      if (tokenEnd === -1) tokenEnd = input.length
+      const token = input.slice(tokenStart, tokenEnd).toLowerCase()
+      const hasFront = /[eiyäüöiy]/.test(token)
+      let mapped = SINGLE_MAP[lowerCh] ?? srcCh
+      if (hasFront) {
+        if (lowerCh === "o") mapped = "ө"
+        if (lowerCh === "u") mapped = "ү"
+      } else {
+        mapped = SINGLE_MAP[lowerCh] ?? srcCh
+      }
+      const shouldCap = options.preserveCase && srcCh !== srcCh.toLowerCase()
+      out += shouldCap ? mapped.toUpperCase() : mapped
+      i += 1
+      continue
+    }
+
+    // default mapping for single char
+    const mapped = SINGLE_MAP[lowerCh]
+    if (mapped !== undefined) {
+      const shouldCap = options.preserveCase && srcCh !== srcCh.toLowerCase()
+      out += shouldCap ? mapped.toUpperCase() : mapped
+    } else {
+      // unknown char: copy as-is
+      out += srcCh
+    }
+    i += 1
+  }
+
+  // Cache the result
+  if (transliterationCache.size >= MAX_CACHE_SIZE) {
+    // Clear oldest entry if cache is full
+    const firstKey = transliterationCache.keys().next().value
+    if (firstKey) transliterationCache.delete(firstKey)
+  }
+  transliterationCache.set(cacheKey, out)
+
+  return out
+}
+
+// Example quick tests (uncomment to run):
+// console.log(transliterateLatinToCyrillic("bayar")); // баяр
+// console.log(transliterateLatinToCyrillic("bayar", { preserveCase: true }));
+// console.log(transliterateLatinToCyrillic("w q", { preserveCase: false })); // ү ө

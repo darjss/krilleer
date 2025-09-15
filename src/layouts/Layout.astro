@@ -1,14 +1,88 @@
+---
+const {
+	title = "Латин → Кирилл хөрвүүлэгч",
+	description = "Латин бичгийг кирилл болгож хөрвүүлнэ. Үнэгүй, хурдан, энгийн.",
+	ogImage,
+	url
+} = Astro.props;
+const canonical = (url ?? Astro.url).toString();
+const siteName = "MGL Convert";
+const ogImageUrl = ogImage ? new URL(ogImage, canonical).toString() : undefined;
+const ogImageAlt = "Латин → Кирилл хөрвүүлэгч — MGL Convert";
+const ogImageType = ogImage?.endsWith('.svg') ? 'image/svg+xml' : 'image/png';
+const ogImageWidth = 1200;
+const ogImageHeight = 630;
+---
+
 <!doctype html>
-<html lang="en">
+<html lang="mn">
 	<head>
 		<meta charset="UTF-8" />
 		<meta name="viewport" content="width=device-width" />
 		<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
 		<meta name="generator" content={Astro.generator} />
-		<title>Astro Basics</title>
+		<link rel="alternate" hreflang="mn" href={canonical} />
+		<meta name="theme-color" content="#0a0a0a" media="(prefers-color-scheme: dark)" />
+		<meta name="theme-color" content="#ffffff" media="(prefers-color-scheme: light)" />
+		<script>
+			{
+				/* Initialize theme early to avoid flash */
+			}
+			try {
+				const stored = localStorage.getItem('theme');
+				const systemPrefersDark = window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches;
+				const isDark = stored ? stored === 'dark' : systemPrefersDark;
+				if (isDark) document.documentElement.classList.add('dark');
+				else document.documentElement.classList.remove('dark');
+			} catch (e) {}
+		</script>
+		<link rel="stylesheet" href="/src/styles/global.css" />
+		<title>{title}</title>
+		<meta name="description" content={description} />
+		<meta name="keywords" content="латин кирилл хөрвүүлэгч, монгол хэл, латин бичиг кирилл болгох, онлайн хөрвүүлэгч, монгол латин кирилл" />
+		<meta name="author" content="MGL Convert" />
+		<meta name="robots" content="index,follow" />
+		<meta property="og:title" content={title} />
+		<meta property="og:description" content={description} />
+		<meta property="og:type" content="website" />
+		<meta property="og:locale" content="mn_MN" />
+		<meta property="og:site_name" content={siteName} />
+		<meta property="og:url" content={canonical} />
+		{ogImageUrl && <meta property="og:image" content={ogImageUrl} />}
+		{ogImageUrl && <meta property="og:image:width" content={String(ogImageWidth)} />}
+		{ogImageUrl && <meta property="og:image:height" content={String(ogImageHeight)} />}
+		{ogImageUrl && <meta property="og:image:type" content={ogImageType} />}
+		{ogImageUrl && <meta property="og:image:alt" content={ogImageAlt} />}
+		<meta name="twitter:card" content="summary_large_image" />
+		<meta name="twitter:title" content={title} />
+		<meta name="twitter:description" content={description} />
+		{ogImageUrl && <meta name="twitter:image" content={ogImageUrl} />}
+		{ogImageUrl && <meta name="twitter:image:alt" content={ogImageAlt} />}
+		<link rel="canonical" href={canonical} />
+		<slot name="head" />
 	</head>
-	<body>
+	<body class="relative min-h-screen bg-background antialiased">
+		<div class="pointer-events-none absolute inset-0 -z-10 bg-[radial-gradient(800px_400px_at_50%_-120px,rgba(255,200,88,0.14),transparent)] dark:bg-[radial-gradient(800px_400px_at_50%_-120px,rgba(255,180,50,0.16),transparent)]"></div>
+		<div class="pointer-events-none absolute inset-0 -z-10 [mask-image:radial-gradient(ellipse_at_center,black,transparent_70%)] bg-[linear-gradient(90deg,rgba(0,0,0,0.04)_1px,transparent_1px),linear-gradient(0deg,rgba(0,0,0,0.04)_1px,transparent_1px)] bg-[size:22px_22px] dark:[mask-image:radial-gradient(ellipse_at_center,white,transparent_70%)] dark:bg-[linear-gradient(90deg,rgba(255,255,255,0.06)_1px,transparent_1px),linear-gradient(0deg,rgba(255,255,255,0.06)_1px,transparent_1px)]"></div>
+		<div class="pointer-events-none absolute inset-0 -z-10 overflow-hidden">
+			<div class="absolute left-1/2 top-[-8rem] h-[28rem] w-[40rem] -translate-x-1/2 rounded-full bg-gradient-to-r from-amber-300/35 via-orange-300/25 to-rose-300/30 blur-3xl dark:from-amber-400/25 dark:via-orange-400/20 dark:to-rose-400/25"></div>
+		</div>
 		<slot />
+		<button id="theme-toggle" class="fixed right-4 bottom-4 z-50 inline-flex items-center gap-2 rounded-none border-2 border-input bg-secondary px-3 py-2 text-sm text-secondary-foreground shadow-[4px_4px_0_0_rgba(0,0,0,0.12)] hover:bg-secondary/80 hover:text-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2" aria-label="Toggle theme">
+			<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="h-4 w-4 block dark:hidden" aria-hidden="true"><path d="M12 18a6 6 0 1 0 0-12 6 6 0 0 0 0 12Z"/><path d="M12 2.25a.75.75 0 0 1 .75.75v1.5a.75.75 0 0 1-1.5 0V3a.75.75 0 0 1 .75-.75Zm0 15a.75.75 0 0 1 .75.75v1.5a.75.75 0 0 1-1.5 0V18a.75.75 0 0 1 .75-.75Zm9-6a.75.75 0 0 1-.75.75h-1.5a.75.75 0 0 1 0-1.5H20.25a.75.75 0 0 1 .75.75Zm-15 0a.75.75 0 0 1-.75.75H3.75a.75.75 0 0 1 0-1.5H6a.75.75 0 0 1 .75.75Zm10.78 7.53a.75.75 0 0 1-1.06 0l-1.06-1.06a.75.75 0 1 1 1.06-1.06l1.06 1.06a.75.75 0 0 1 0 1.06Zm-9.44-9.44a.75.75 0 0 1-1.06 0L6.22 9.78A.75.75 0 1 1 7.28 8.72l1.06 1.06a.75.75 0 0 1 0 1.06Zm9.44-4.59a.75.75 0 0 1 0 1.06l-1.06 1.06a.75.75 0 1 1-1.06-1.06l1.06-1.06a.75.75 0 0 1 1.06 0ZM8.34 18.28a.75.75 0 0 1-1.06 0L6.22 17.16a.75.75 0 0 1 1.06-1.06l1.06 1.06c.3.3.3.77 0 1.06Z"/></svg>
+			<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="h-4 w-4 hidden dark:block" aria-hidden="true"><path d="M21.752 15.002A9.718 9.718 0 0 1 12.75 22.5c-5.385 0-9.75-4.365-9.75-9.75 0-4.753 3.353-8.713 7.778-9.583a.75.75 0 0 1 .848 1.02A8.25 8.25 0 0 0 21 14.25c0 .269-.014.535-.04.798a.75.75 0 0 1-.712-.046l-.496-.298Z"/></svg>
+			<span class="sr-only">Сэдэв солих</span>
+		</button>
+		<script>
+			document.addEventListener('DOMContentLoaded', () => {
+				const btn = document.getElementById('theme-toggle');
+				if (!btn) return;
+				btn.addEventListener('click', () => {
+					const isDark = document.documentElement.classList.toggle('dark');
+					try { localStorage.setItem('theme', isDark ? 'dark' : 'light'); } catch (e) {}
+				});
+			});
+		</script>
 	</body>
 </html>
 

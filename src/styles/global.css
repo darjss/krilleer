@@ -1,0 +1,260 @@
+/* src/app.css or put it where you have your main .css file */
+@import "tailwindcss";
+
+@plugin 'tailwindcss-animate';
+@plugin '@kobalte/tailwindcss';
+
+@custom-variant dark (.dark &,[data-kb-theme="dark"] &);
+
+@layer base {
+  :root {
+    --color-background: hsl(45 100% 98%);
+    --color-foreground: hsl(24 12% 12%);
+
+    --color-muted: hsl(42 60% 95%);
+    --color-muted-foreground: hsl(24 14% 35%);
+
+    --color-popover: hsl(45 100% 98%);
+    --color-popover-foreground: hsl(24 12% 12%);
+
+    --color-border: hsl(24 20% 80%);
+    --color-input: hsl(24 20% 80%);
+
+    --color-card: hsl(45 100% 98%);
+    --color-card-foreground: hsl(24 12% 12%);
+
+    --color-primary: hsl(32 95% 55%);
+    --color-primary-foreground: hsl(0 0% 10%);
+
+    --color-secondary: hsl(45 100% 88%);
+    --color-secondary-foreground: hsl(24 20% 15%);
+
+    --color-accent: hsl(20 90% 90%);
+    --color-accent-foreground: hsl(24 20% 15%);
+
+    --color-destructive: hsl(0 84% 60%);
+    --color-destructive-foreground: hsl(0 0% 98%);
+
+    --color-info: hsl(204 94% 94%);
+    --color-info-foreground: hsl(199 89% 48%);
+
+    --color-success: hsl(149 80% 90%);
+    --color-success-foreground: hsl(160 84% 39%);
+
+    --color-warning: hsl(42 95% 82%);
+    --color-warning-foreground: hsl(25 65% 30%);
+
+    --color-error: hsl(0 93% 94%);
+    --color-error-foreground: hsl(0 84% 60%);
+
+    --color-ring: hsl(32 85% 45%);
+  }
+
+  .dark,
+  [data-kb-theme="dark"] {
+    --color-background: hsl(24 20% 7%);
+    --color-foreground: hsl(45 25% 95%);
+
+    --color-muted: hsl(24 20% 14%);
+    --color-muted-foreground: hsl(45 10% 70%);
+
+    --color-accent: hsl(24 20% 14%);
+    --color-accent-foreground: hsl(45 25% 95%);
+
+    --color-popover: hsl(24 20% 7%);
+    --color-popover-foreground: hsl(45 25% 95%);
+
+    --color-border: hsl(24 18% 20%);
+    --color-input: hsl(24 18% 20%);
+
+    --color-card: hsl(24 20% 9%);
+    --color-card-foreground: hsl(45 25% 95%);
+
+    --color-primary: hsl(32 95% 55%);
+    --color-primary-foreground: hsl(0 0% 10%);
+
+    --color-secondary: hsl(24 20% 14%);
+    --color-secondary-foreground: hsl(45 25% 95%);
+
+    --color-destructive: hsl(0 62% 30%);
+    --color-destructive-foreground: hsl(0 0% 98%);
+
+    --color-info: hsl(226 57% 21%);
+    --color-info-foreground: hsl(199 89% 48%);
+
+    --color-success: hsl(165 91% 9%);
+    --color-success-foreground: hsl(160 84% 39%);
+
+    --color-warning: hsl(32 70% 22%);
+    --color-warning-foreground: hsl(25 95% 53%);
+
+    --color-error: hsl(0 75% 16%);
+    --color-error-foreground: hsl(0 84% 60%);
+
+    --color-ring: hsl(32 70% 55%);
+  }
+
+  * {
+    @apply border-border;
+  }
+
+  body {
+    @apply bg-background text-foreground;
+    font-feature-settings: "rlig" 1, "calt" 1;
+  }
+
+  @media (max-width: 640px) {
+    .container {
+      @apply px-4;
+    }
+  }
+
+  ::-webkit-scrollbar {
+    width: 16px;
+  }
+
+  ::-webkit-scrollbar-thumb {
+    border-radius: 9999px;
+    border: 4px solid transparent;
+    background-clip: content-box;
+    @apply bg-accent;
+  }
+
+  ::-webkit-scrollbar-corner {
+    display: none;
+  }
+
+  *,
+  ::after,
+  ::before,
+  ::backdrop,
+  ::file-selector-button {
+    border-color: var(--color-gray-200, currentColor);
+  }
+}
+
+@theme {
+  --color-border: var(--border);
+  --color-input: var(--input);
+  --color-ring: var(--ring);
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+
+  --color-primary: var(--primary);
+  --color-primary-foreground: var(--primary-foreground);
+
+  --color-secondary: var(--secondary);
+  --color-secondary-foreground: var(--secondary-foreground);
+
+  --color-destructive: var(--destructive);
+  --color-destructive-foreground: var(--destructive-foreground);
+
+  --color-info: var(--info);
+  --color-info-foreground: var(--info-foreground);
+
+  --color-success: var(--success);
+  --color-success-foreground: var(--success-foreground);
+
+  --color-warning: var(--warning);
+  --color-warning-foreground: var(--warning-foreground);
+
+  --color-error: var(--error);
+  --color-error-foreground: var(--error-foreground);
+
+  --color-muted: var(--muted);
+  --color-muted-foreground: var(--muted-foreground);
+
+  --color-accent: var(--accent);
+  --color-accent-foreground: var(--accent-foreground);
+
+  --color-popover: var(--popover);
+  --color-popover-foreground: var(--popover-foreground);
+
+  --color-card: var(--card);
+  --color-card-foreground: var(--card-foreground);
+
+  --radius: 0.5rem;
+  --radius-xl: calc(var(--radius) + 4px);
+  --radius-lg: var(--radius);
+  --radius-md: calc(var(--radius) - 2px);
+  --radius-sm: calc(var(--radius) - 4px);
+
+  @keyframes accordion-down {
+    from {
+      height: 0;
+    }
+    to {
+      height: var(--kb-accordion-content-height);
+    }
+  }
+
+  @keyframes accordion-up {
+    from {
+      height: var(--kb-accordion-content-height);
+    }
+    to {
+      height: 0;
+    }
+  }
+
+  @keyframes content-show {
+    from {
+      opacity: 0;
+      transform: scale(0.96);
+    }
+    to {
+      opacity: 1;
+      transform: scale(1);
+    }
+  }
+
+  @keyframes content-hide {
+    from {
+      opacity: 1;
+      transform: scale(1);
+    }
+    to {
+      opacity: 0;
+      transform: scale(0.96);
+    }
+  }
+
+  @keyframes caret-blink {
+    0%,
+    70%,
+    100% {
+      opacity: 1;
+    }
+    20%,
+    50% {
+      opacity: 0;
+    }
+  }
+
+  --animate-accordion-down: accordion-down 0.2s ease-out;
+  --animate-accordion-up: accordion-up 0.2s ease-out;
+  --animate-content-show: content-show 0.2s ease-out;
+  --animate-content-hide: content-hide 0.2s ease-out;
+  --animate-caret-blink: caret-blink 1.25s ease-out infinite;
+}
+
+@utility container {
+  margin-inline: auto;
+  padding-inline: 2rem;
+  @media (width >= --theme(--breakpoint-sm)) {
+    max-width: none;
+  }
+  @media (width >= 1400px) {
+    max-width: 1400px;
+  }
+}
+
+@utility step {
+  counter-increment: step;
+
+  &:before {
+    @apply absolute w-9 h-9 bg-muted rounded-full font-mono font-medium text-center text-base inline-flex items-center justify-center -indent-px border-4 border-background;
+    @apply ml-[-50px] mt-[-4px];
+    content: counter(step);
+  }
+}
