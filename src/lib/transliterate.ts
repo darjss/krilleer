@@ -33,10 +33,6 @@ const MULTIGRAPHS: Record<string, string> = {
   yu: "ю",
   ya: "я",
   ye: "е",
-  je: "е",
-  zh: "ж",
-  ng: "нг",
-  dz: "дз",
   ph: "ф",
   // add more if needed
 }
@@ -201,6 +197,71 @@ export function transliterateLatinToCyrillic(input: string, opts?: Transliterate
   }
   transliterationCache.set(cacheKey, out)
 
+  return out
+}
+
+// Reverse helper: best-effort Cyrillic -> Latin so we can keep a single
+// textarea while still recognizing multigraphs typed incrementally.
+// This does not aim for perfect reversibility; it just picks a canonical
+// Latin spelling that round-trips with the forward mapping.
+const CYR_TO_LAT: Record<string, string> = {
+  "щ": "shch",
+  "ш": "sh",
+  "ч": "ch",
+  "ц": "c", // map to 'c' so 'ch' survives the reverse step
+  "ё": "yo",
+  "ю": "yu",
+  "я": "ya",
+  "е": "ye",
+  "ж": "j",
+  "х": "h",
+  "а": "a",
+  "б": "b",
+  "в": "v",
+  "г": "g",
+  "д": "d",
+  "э": "e",
+  "з": "z",
+  "и": "i",
+  "й": "y",
+  "к": "k",
+  "л": "l",
+  "м": "m",
+  "н": "n",
+  "о": "o",
+  "п": "p",
+  "р": "r",
+  "с": "s",
+  "т": "t",
+  "у": "u",
+  "ф": "f",
+  "q": "q", // pass-through just in case
+  "w": "w", // pass-through just in case
+  "ө": "q",
+  "ү": "w",
+  "ы": "y",
+  "ь": "'",
+}
+
+export function reverseTransliterateCyrillicToLatin(input: string): string {
+  if (!input) return ""
+  let out = ""
+  for (let i = 0; i < input.length; i += 1) {
+    const ch = input[i]
+    const lower = ch.toLowerCase()
+    const mapped = CYR_TO_LAT[lower]
+    if (mapped !== undefined) {
+      const isUpper = ch !== lower
+      if (isUpper && mapped.length > 0) {
+        out += mapped[0].toUpperCase() + mapped.slice(1)
+      } else {
+        out += mapped
+      }
+    } else {
+      // unknown or already Latin; passthrough
+      out += ch
+    }
+  }
   return out
 }
 

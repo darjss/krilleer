@@ -7,7 +7,7 @@ const {
 } = Astro.props;
 import "../global.css";
 const canonical = (url ?? Astro.url).toString();
-const siteName = "MGL Convert";
+const siteName = "Кирилл хөрвүүлэгч";
 const ogImageUrl = ogImage ? new URL(ogImage, canonical).toString() : undefined;
 const ogImageAlt = "Монгол латин → кирилл хөрвүүлэгч — MGL Convert";
 const ogImageType = ogImage?.endsWith('.svg') ? 'image/svg+xml' : 'image/png';
@@ -39,7 +39,7 @@ const ogImageHeight = 630;
 		</script>
 		<title>{title}</title>
 		<meta name="description" content={description} />
-		<meta name="keywords" content="монгол латин кирилл хөрвүүлэгч, монгол хэл, латин бичгийг кирилл болгох, онлайн хөрвүүлэгч, монгол латин кирилл, mongol bichig, mongol hurvuulj" />
+		<meta name="keywords" content="монгол латин кирилл хөрвүүлэгч, монгол хэл, латин бичгийг кирилл болгох, онлайн хөрвүүлэгч, монгол латин кирилл, mongol bichig, mongol hurvuulegch, mongol latin krilleer, kirilleer hurvuulegch, " />
 		<meta name="author" content="MGL Convert" />
 		<meta name="robots" content="index,follow" />
 		<meta property="og:title" content={title} />
@@ -62,11 +62,13 @@ const ogImageHeight = 630;
 		<slot name="head" />
 	</head>
 	<body class="relative min-h-screen bg-background antialiased">
+		<div class="pointer-events-none absolute inset-0 -z-10 bg-[radial-gradient(circle_at_1px_1px,rgba(0,0,0,0.35)_1px,transparent_0)] bg-[size:20px_20px] dark:bg-[radial-gradient(circle_at_1px_1px,rgba(255,255,255,0.12)_1px,transparent_0)]" aria-hidden="true"></div>
 		<div class="pointer-events-none absolute inset-0 -z-10 bg-[radial-gradient(800px_400px_at_50%_-120px,rgba(255,200,88,0.14),transparent)] dark:bg-[radial-gradient(800px_400px_at_50%_-120px,rgba(255,180,50,0.16),transparent)]"></div>
 		<div class="pointer-events-none absolute inset-0 -z-10 [mask-image:radial-gradient(ellipse_at_center,black,transparent_70%)] bg-[linear-gradient(90deg,rgba(0,0,0,0.04)_1px,transparent_1px),linear-gradient(0deg,rgba(0,0,0,0.04)_1px,transparent_1px)] bg-[size:22px_22px] dark:[mask-image:radial-gradient(ellipse_at_center,white,transparent_70%)] dark:bg-[linear-gradient(90deg,rgba(255,255,255,0.06)_1px,transparent_1px),linear-gradient(0deg,rgba(255,255,255,0.06)_1px,transparent_1px)]"></div>
 		<div class="pointer-events-none absolute inset-0 -z-10 overflow-hidden">
 			<div class="absolute left-1/2 top-[-8rem] h-[28rem] w-[40rem] -translate-x-1/2 rounded-full bg-gradient-to-r from-amber-300/35 via-orange-300/25 to-rose-300/30 blur-3xl dark:from-amber-400/25 dark:via-orange-400/20 dark:to-rose-400/25"></div>
 		</div>
+		
 		<slot />
 		<button id="theme-toggle" class="fixed right-6 top-6 z-[9999] inline-flex items-center gap-2 rounded-lg border-2 border-border bg-background px-3 py-2 text-sm text-foreground shadow-lg hover:bg-secondary hover:text-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 transition-colors" aria-label="Toggle theme">
 			<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" class="h-4 w-4 block dark:hidden" aria-hidden="true">
