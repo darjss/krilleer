@@ -1,6 +1,7 @@
 ---
 import Layout from '../layouts/Layout.astro';
 import Converter from '../components/converter.tsx';
+import ConversionTable from "@/components/conversion-table";
 
 const pageTitle = "Кирилл хөрвүүлэгч";
 const pageDescription = "Монгол латин бичгийг кирилл болгон хөрвүүлдэг хялбар хэрэгсэл. Шууд хөрвүүлж, хуулж болно.";
@@ -39,7 +40,9 @@ const jsonLd = {
 
 			<Converter client:load />
 
-
+			<div class="pt-2">
+				<ConversionTable client:load />
+			</div>
 		</div>
 	</div>
 </Layout>

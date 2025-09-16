@@ -72,6 +72,32 @@ const SINGLE_MAP: Record<string, string> = {
   " ": " ",
 }
 
+// Public mapping pairs for UI display (Latin → Cyrillic)
+export type LatinToCyrillicMapping = { latin: string; cyrillic: string; note?: string }
+
+const EXCLUDED_FROM_DISPLAY = new Set([" ", ".", ","])
+
+export const LATIN_TO_CYRILLIC_DISPLAY_MAPPINGS: LatinToCyrillicMapping[] = (() => {
+  const pairs: LatinToCyrillicMapping[] = []
+
+  // Multigraphs first
+  for (const [latin, cyrillic] of Object.entries(MULTIGRAPHS)) {
+    pairs.push({ latin, cyrillic })
+  }
+
+  // Singles
+  for (const [latin, cyrillic] of Object.entries(SINGLE_MAP)) {
+    if (EXCLUDED_FROM_DISPLAY.has(latin)) continue
+    const mapping: LatinToCyrillicMapping = { latin, cyrillic }
+    if (latin === "i") mapping.note = "Эгшгийн дараа → й"
+    pairs.push(mapping)
+  }
+
+  // Sort by latin length (desc), then lexicographically
+  pairs.sort((a, b) => b.latin.length - a.latin.length || a.latin.localeCompare(b.latin))
+  return pairs
+})()
+
 // Precompute multigraph keys sorted by length desc so longest match first
 const MULTI_KEYS_DESC = Object.keys(MULTIGRAPHS).sort((a, b) => b.length - a.length)
 
