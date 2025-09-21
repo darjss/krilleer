@@ -75,6 +75,11 @@ export default function Converter() {
         <Switch>
             <Match when={zenMode()}>
                 <div class="fixed inset-0 z-50 bg-background pt-16 p-6">
+                    <div class="absolute top-4 right-20">
+                        <Button variant="outline" size="sm" onClick={() => setZenMode(false)} class="text-xs">
+                            Гарах (Esc)
+                        </Button>
+                    </div>
                     <TextField class="h-full">
                         <TextArea
                             placeholder="Латин үсгээр бичихэд шууд кирилл рүү хөрвөнө..."

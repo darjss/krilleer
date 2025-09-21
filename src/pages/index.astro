@@ -2,6 +2,7 @@
 import Layout from '../layouts/Layout.astro';
 import Converter from '../components/converter.tsx';
 import ConversionTable from "@/components/conversion-table";
+import PosthogLayout from '../layouts/PosthogLayout.astro';
 
 const pageTitle = "Кирилл хөрвүүлэгч";
 const pageDescription = "Монгол латин бичгийг кирилл болгон хөрвүүлдэг хялбар хэрэгсэл. Шууд хөрвүүлж, хуулж болно.";
@@ -21,8 +22,9 @@ const jsonLd = {
 	"offers": { "@type": "Offer", "price": "0", "priceCurrency": "MNT" }
 };
 ---
-
+<!-- <PosthogLayout> -->
 <Layout title={pageTitle} description={pageDescription} ogImage={ogImage}>
+	
 	<Fragment slot="head">
 		<script type="application/ld+json" set:html={JSON.stringify(jsonLd)} />
 	</Fragment>
@@ -46,3 +48,4 @@ const jsonLd = {
 		</div>
 	</div>
 </Layout>
+<!-- </PosthogLayout> -->
