@@ -65,13 +65,17 @@ const ogImageHeight = 630;
 		<div class="pointer-events-none absolute inset-0 -z-10 bg-[radial-gradient(circle_at_1px_1px,rgba(0,0,0,0.35)_1px,transparent_0)] bg-[size:20px_20px] dark:bg-[radial-gradient(circle_at_1px_1px,rgba(255,255,255,0.12)_1px,transparent_0)]" aria-hidden="true"></div>
 		<div class="pointer-events-none absolute inset-0 -z-10 bg-[radial-gradient(800px_400px_at_50%_-120px,rgba(255,200,88,0.14),transparent)] dark:bg-[radial-gradient(800px_400px_at_50%_-120px,rgba(255,180,50,0.16),transparent)]"></div>
 		<div class="pointer-events-none absolute inset-0 -z-10 [mask-image:radial-gradient(ellipse_at_center,black,transparent_70%)] bg-[linear-gradient(90deg,rgba(0,0,0,0.04)_1px,transparent_1px),linear-gradient(0deg,rgba(0,0,0,0.04)_1px,transparent_1px)] bg-[size:22px_22px] dark:[mask-image:radial-gradient(ellipse_at_center,white,transparent_70%)] dark:bg-[linear-gradient(90deg,rgba(255,255,255,0.06)_1px,transparent_1px),linear-gradient(0deg,rgba(255,255,255,0.06)_1px,transparent_1px)]"></div>
-		<div class="pointer-events-none absolute inset-0 -z-10 overflow-hidden">
+		<div class="pointer-events-none absolute inset-0 -z-10 overflow-hidden"style={{
+			background: "radial-gradient(circle at 1px 1px, rgba(0, 0, 0, 0.35) 1px, transparent 0)",
+			backgroundSize: "20px 20px"
+		}}>
 			<div class="absolute left-1/2 top-[-8rem] h-[28rem] w-[40rem] -translate-x-1/2 rounded-full bg-gradient-to-r from-amber-300/35 via-orange-300/25 to-rose-300/30 blur-3xl dark:from-amber-400/25 dark:via-orange-400/20 dark:to-rose-400/25"></div>
 		</div>
+
 		
 		<slot />
-		<button id="theme-toggle" class="fixed right-6 top-6 z-[9999] inline-flex items-center gap-2 rounded-lg border-2 border-border bg-background px-3 py-2 text-sm text-foreground shadow-lg hover:bg-secondary hover:text-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 transition-colors" aria-label="Toggle theme">
-			<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" class="h-4 w-4 block dark:hidden" aria-hidden="true">
+		<button id="theme-toggle" class="fixed right-4 top-4 z-[9999] inline-flex items-center gap-1 rounded-lg border-2 border-border bg-background px-2 py-1 text-xs text-foreground shadow-lg hover:bg-secondary hover:text-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 transition-colors" aria-label="Toggle theme">
+			<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" class="h-3 w-3 block dark:hidden" aria-hidden="true">
 				<circle cx="12" cy="12" r="4"></circle>
 				<line x1="12" y1="2" x2="12" y2="5" stroke-linecap="round"></line>
 				<line x1="12" y1="19" x2="12" y2="22" stroke-linecap="round"></line>
@@ -82,7 +86,7 @@ const ogImageHeight = 630;
 				<line x1="4.22" y1="19.78" x2="6.34" y2="17.66" stroke-linecap="round"></line>
 				<line x1="17.66" y1="6.34" x2="19.78" y2="4.22" stroke-linecap="round"></line>
 			</svg>
-			<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" class="h-4 w-4 hidden dark:block" aria-hidden="true">
+			<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" class="h-3 w-3 hidden dark:block" aria-hidden="true">
 				<path stroke-linecap="round" stroke-linejoin="round" d="M21 12.79A9 9 0 1 1 11.21 3a7 7 0 0 0 9.79 9.79Z" />
 			</svg>
 			<span class="sr-only">Сэдэв солих</span>
