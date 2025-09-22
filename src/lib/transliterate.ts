@@ -85,7 +85,7 @@ export const LATIN_TO_CYRILLIC_DISPLAY_MAPPINGS: LatinToCyrillicMapping[] = (() 
     pairs.push({ latin, cyrillic })
   }
 
-  // Singles
+  
   for (const [latin, cyrillic] of Object.entries(SINGLE_MAP)) {
     if (EXCLUDED_FROM_DISPLAY.has(latin)) continue
     const mapping: LatinToCyrillicMapping = { latin, cyrillic }
@@ -93,7 +93,6 @@ export const LATIN_TO_CYRILLIC_DISPLAY_MAPPINGS: LatinToCyrillicMapping[] = (() 
     pairs.push(mapping)
   }
 
-  // Sort by latin length (desc), then lexicographically
   pairs.sort((a, b) => b.latin.length - a.latin.length || a.latin.localeCompare(b.latin))
   return pairs
 })()

@@ -3,8 +3,6 @@ import { Card } from "@/components/ui/card"
 import { transliterateLatinToCyrillic, reverseTransliterateCyrillicToLatin } from "@/lib/transliterate"
 import { useLocalStorage } from "@/hooks/useLocalStorage"
 import { createSignal, createEffect, Switch, Match } from "solid-js"
-import { Check } from "./ui/icons/check"
-import { Copy } from "./ui/icons/copy"
 import { TextField, TextFieldTextArea as TextArea } from "./ui/text-field"
 
 export default function Converter() {
@@ -25,8 +23,6 @@ export default function Converter() {
         document.addEventListener("keydown", handleKeyDown)
         return () => document.removeEventListener("keydown", handleKeyDown)
     })
-
-    // Single-textarea mode: we store/show Cyrillic directly
 
     const handleCopy = async () => {
         try {
@@ -93,9 +89,9 @@ export default function Converter() {
             </Match>
             <Match when={!zenMode()}>
                 <Card class="p-0">
-                    <div class="flex items-center justify-between p-6 border-b-2 border-border bg-secondary/40">
-                        <h2 class="text-lg font-bold tracking-tight">Латин текст оруулна уу</h2>
-                        <div class="flex gap-2">
+                    <div class="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between p-4 sm:p-6 border-b-2 border-border bg-secondary/40">
+                        <h2 class="text-base sm:text-lg font-bold tracking-tight">Латин текст оруулна уу</h2>
+                        <div class="flex flex-wrap gap-2">
                             <Button variant="outline" size="sm" onClick={handleCopy} class="text-xs">
                                 Хуулах
                             </Button>
@@ -110,7 +106,7 @@ export default function Converter() {
                             </Button>
                         </div>
                     </div>
-                    <div class="p-6 space-y-4">
+                    <div class="p-4 sm:p-6 space-y-4">
                         <TextField>
                             <TextArea
                                 placeholder="Латин үсгээр бичихэд шууд кирилл рүү хөрвөнө..."
