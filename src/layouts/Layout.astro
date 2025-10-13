@@ -1,5 +1,5 @@
 ---
-import PosthogLayout from './PosthogLayout.astro'
+import PostHog from '../components/posthog.astro'
 const {
 	title = "Монгол латин → кирилл хөрвүүлэгч",
 	description = "Монгол латин бичгийг кирилл болгон хөрвүүлдэг хялбар хэрэгсэл. Шууд хөрвүүлж, хуулж болно.",
@@ -8,6 +8,8 @@ const {
 } = Astro.props;
 import "../global.css";
 const canonical = (url ?? Astro.url).toString();
+const canonicalHostname = 'https://kirilleer.com';
+const canonicalHref = canonical.replace(/^https?:\/\/[^/]+/, canonicalHostname);
 const siteName = "Кирилл хөрвүүлэгч";
 const ogImageUrl = ogImage ? new URL(ogImage, canonical).toString() : undefined;
 const ogImageAlt = "Монгол латин → кирилл хөрвүүлэгч — MGL Convert";
@@ -23,7 +25,8 @@ const ogImageHeight = 630;
 		<meta name="viewport" content="width=device-width" />
 		<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
 		<meta name="generator" content={Astro.generator} />
-		<link rel="alternate" hreflang="mn" href={canonical} />
+        <link rel="alternate" hreflang="mn" href={canonicalHref} />
+        <link rel="alternate" hreflang="x-default" href={canonicalHref} />
 		<meta name="theme-color" content="#0a0a0a" media="(prefers-color-scheme: dark)" />
 		<meta name="theme-color" content="#ffffff" media="(prefers-color-scheme: light)" />
 		<script>
@@ -36,14 +39,7 @@ const ogImageHeight = 630;
 				else document.documentElement.classList.remove('dark');
 			} catch (e) {}
 		</script>
-		<script is:inline>
-    !function(t,e){var o,n,p,r;e.__SV||(window.posthog=e,e._i=[],e.init=function(i,s,a){function g(t,e){var o=e.split(".");2==o.length&&(t=t[o[0]],e=o[1]),t[e]=function(){t.push([e].concat(Array.prototype.slice.call(arguments,0)))}}(p=t.createElement("script")).type="text/javascript",p.crossOrigin="anonymous",p.async=!0,p.src=s.api_host.replace(".i.posthog.com","-assets.i.posthog.com")+"/static/array.js",(r=t.getElementsByTagName("script")[0]).parentNode.insertBefore(p,r);var u=e;for(void 0!==a?u=e[a]=[]:a="posthog",u.people=u.people||[],u.toString=function(t){var e="posthog";return"posthog"!==a&&(e+="."+a),t||(e+=" (stub)"),e},u.people.toString=function(){return u.toString(1)+".people (stub)"},o="init Ce js Ls Te Fs Ds capture Ye calculateEventProperties Us register register_once register_for_session unregister unregister_for_session Ws getFeatureFlag getFeatureFlagPayload isFeatureEnabled reloadFeatureFlags updateEarlyAccessFeatureEnrollment getEarlyAccessFeatures on onFeatureFlags onSurveysLoaded onSessionId getSurveys getActiveMatchingSurveys renderSurvey displaySurvey canRenderSurvey canRenderSurveyAsync identify setPersonProperties group resetGroups setPersonPropertiesForFlags resetPersonPropertiesForFlags setGroupPropertiesForFlags resetGroupPropertiesForFlags reset get_distinct_id getGroups get_session_id get_session_replay_url alias set_config startSessionRecording stopSessionRecording sessionRecordingStarted captureException loadToolbar get_property getSessionProperty Bs zs createPersonProfile Hs Ms Gs opt_in_capturing opt_out_capturing has_opted_in_capturing has_opted_out_capturing get_explicit_consent_status is_capturing clear_opt_in_out_capturing Ns debug L qs getPageViewId captureTraceFeedback captureTraceMetric".split(" "),n=0;n<o.length;n++)g(u,o[n]);e._i.push([i,s,a])},e.__SV=1)}(document,window.posthog||[]);
-    posthog.init('phc_bOW6Z0vqnvpX1ZKSHu0X4ZjzTpRIjyn7KEo0wF7sgQt', {
-        api_host: 'https://us.i.posthog.com',
-        defaults: '2025-05-24',
-        person_profiles: 'always'
-    })
-</script>
+		<PostHog />
 		<title>{title}</title>
 		<meta name="description" content={description} />
 		<meta name="keywords" content="монгол латин кирилл хөрвүүлэгч, монгол хэл, латин бичгийг кирилл болгох, онлайн хөрвүүлэгч, монгол латин кирилл, mongol bichig, mongol hurvuulegch, mongol latin krilleer, kirilleer hurvuulegch, " />
@@ -54,7 +50,7 @@ const ogImageHeight = 630;
 		<meta property="og:type" content="website" />
 		<meta property="og:locale" content="mn_MN" />
 		<meta property="og:site_name" content={siteName} />
-		<meta property="og:url" content={canonical} />
+        <meta property="og:url" content={canonicalHref} />
 		{ogImageUrl && <meta property="og:image" content={ogImageUrl} />}
 		{ogImageUrl && <meta property="og:image:width" content={String(ogImageWidth)} />}
 		{ogImageUrl && <meta property="og:image:height" content={String(ogImageHeight)} />}
@@ -65,14 +61,15 @@ const ogImageHeight = 630;
 		<meta name="twitter:description" content={description} />
 		{ogImageUrl && <meta name="twitter:image" content={ogImageUrl} />}
 		{ogImageUrl && <meta name="twitter:image:alt" content={ogImageAlt} />}
-		<link rel="canonical" href={canonical} />
+        <link rel="canonical" href={canonicalHref} />
 		<slot name="head" />
 	</head>
 	<body class="relative min-h-dvh bg-background antialiased">
+
 		<div class="pointer-events-none fixed inset-0 -z-10 bg-[radial-gradient(circle_at_1px_1px,rgba(0,0,0,0.35)_1px,transparent_0)] bg-[size:20px_20px] dark:bg-[radial-gradient(circle_at_1px_1px,rgba(255,255,255,0.12)_1px,transparent_0)]" aria-hidden="true"></div>
 		<div class="pointer-events-none fixed inset-0 -z-10 bg-[radial-gradient(800px_400px_at_50%_-120px,rgba(255,200,88,0.14),transparent)] dark:bg-[radial-gradient(800px_400px_at_50%_-120px,rgba(255,180,50,0.16),transparent)]"></div>
 		<div class="pointer-events-none fixed inset-0 -z-10 bg-[linear-gradient(90deg,rgba(0,0,0,0.04)_1px,transparent_1px),linear-gradient(0deg,rgba(0,0,0,0.04)_1px,transparent_1px)] bg-[size:22px_22px] dark:bg-[linear-gradient(90deg,rgba(255,255,255,0.06)_1px,transparent_1px),linear-gradient(0deg,rgba(255,255,255,0.06)_1px,transparent_1px)]"></div>
-		<div class="pointer-events-none fixed inset-0 -z-10 overflow-hidden"style={{
+		<div class="pointer-events-none fixed inset-0 -z-10 overflow-hidden" style={{
 			background: "radial-gradient(circle at 1px 1px, rgba(0, 0, 0, 0.35) 1px, transparent 0)",
 			backgroundSize: "20px 20px"
 		}}>
@@ -81,6 +78,16 @@ const ogImageHeight = 630;
 
 		
 		<slot />
+		<footer class="mt-12 border-t border-border">
+			<div class="max-w-5xl mx-auto px-4 py-8 text-sm flex flex-wrap gap-4 opacity-90">
+				<span>© {new Date().getFullYear()} Kirilleer</span>
+				<a href="/kiril-bichih" class="hover:underline">Кириллээр бичих</a>
+				<a href="/huwruuleh-husnegt" class="hover:underline">Хөрвүүлэлтийн хүснэгт</a>
+				<a href="/latin-to-cyrillic" class="hover:underline">Latin → Cyrillic</a>
+				<a href="/cyrillic-to-latin" class="hover:underline">Кирилл → Латин</a>
+				<a href="/faq" class="hover:underline">FAQ</a>
+			</div>
+		</footer>
 		<button id="theme-toggle" class="fixed right-4 top-4 z-[9999] inline-flex items-center gap-1 rounded-lg border-2 border-border bg-background px-2 py-1 text-xs text-foreground shadow-lg hover:bg-secondary hover:text-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 transition-colors" aria-label="Toggle theme">
 			<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" class="h-3 w-3 block dark:hidden" aria-hidden="true">
 				<circle cx="12" cy="12" r="4"></circle>

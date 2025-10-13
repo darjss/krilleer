@@ -1,25 +1,33 @@
 ---
 import Layout from '../layouts/Layout.astro';
-import Converter from '../components/converter.tsx';
+import Converter from '../components/converter';
 import ConversionTable from "@/components/conversion-table";
 import PosthogLayout from '../layouts/PosthogLayout.astro';
 
-const pageTitle = "Кирилл хөрвүүлэгч";
-const pageDescription = "Монгол латин бичгийг кирилл болгон хөрвүүлдэг хялбар хэрэгсэл. Шууд хөрвүүлж, хуулж болно.";
+const pageTitle = "Кириллээр бичих — Латинаас Кирилл хөрвүүлэгч (Монгол) | Kirilleer";
+const pageDescription = "Латинаар бичсэнийг монгол Кирилл үсгээр шууд хөрвүүлнэ. Түргэн, үнэгүй, нэвтрэлгүй.";
 const ogImage = "/og-image.svg";
 
 const siteUrl = Astro.url.toString();
 const jsonLd = {
-	"@context": "https://schema.org",
-	"@type": "WebApplication",
-	"name": "Монгол латин → кирилл хөрвүүлэгч",
-	"applicationCategory": "UtilityApplication",
-	"operatingSystem": "All",
-	"url": siteUrl,
-	"inLanguage": "mn",
-	"description": pageDescription,
-	"image": ogImage,
-	"offers": { "@type": "Offer", "price": "0", "priceCurrency": "MNT" }
+    "@context": "https://schema.org",
+    "@type": "WebApplication",
+    "name": "Монгол латин → кирилл хөрвүүлэгч",
+    "applicationCategory": "UtilityApplication",
+    "operatingSystem": "All",
+    "url": siteUrl,
+    "inLanguage": "mn",
+    "description": pageDescription,
+    "image": ogImage,
+    "offers": { "@type": "Offer", "price": "0", "priceCurrency": "MNT" },
+    "potentialAction": {
+        "@type": "SearchAction",
+        "target": {
+            "@type": "EntryPoint",
+            "urlTemplate": siteUrl
+        },
+        "query-input": "required name=search_term_string"
+    }
 };
 ---
 
@@ -31,7 +39,7 @@ const jsonLd = {
 
     <div class="min-h-dvh bg-transparent px-4 sm:px-6 pt-24 sm:pt-32 pb-8 sm:pb-10">
         <div class="max-w-3xl mx-auto space-y-8 sm:space-y-10">
-            <div class="text-center space-y-3 sm:space-y-4 pt-8 sm:pt-12">
+            <div class="text-center space-y-3 sm:space-y-4 pt-20 sm:pt-24">
                 <h1 class="text-3xl sm:text-6xl font-black tracking-tighter text-foreground">
 					Монгол галиг → кирилл хөрвүүлэгч
 				</h1>
@@ -42,8 +50,8 @@ const jsonLd = {
 
 			<Converter client:load />
 
-            <div class="pt-0 sm:pt-2">
-				<ConversionTable client:load />
+			<div class="pt-0 sm:pt-2">
+				<ConversionTable client:visible />
 			</div>
 		</div>
 	</div>

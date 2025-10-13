@@ -1,0 +1,38 @@
+---
+import Layout from '@/layouts/Layout.astro'
+
+const title = "Кирилл → Латин хөрвүүлэгч (Монгол) | Kirilleer"
+const description = "Монгол кирилл үсгээс латин бичиг рүү хөрвүүлэх заавар ба арга."
+const ogImage = "/og-image.svg"
+
+const siteUrl = Astro.url.toString()
+const jsonLd = {
+  "@context": "https://schema.org",
+  "@type": "WebPage",
+  name: title,
+  url: siteUrl,
+  inLanguage: "mn",
+  description
+}
+---
+
+<Layout title={title} description={description} ogImage={ogImage}>
+  <Fragment slot="head">
+    <script type="application/ld+json" set:html={JSON.stringify(jsonLd)} />
+  </Fragment>
+
+  <div class="min-h-dvh px-4 sm:px-6 pt-24 sm:pt-32 pb-10">
+    <div class="max-w-3xl mx-auto space-y-6">
+      <h1 class="text-3xl sm:text-5xl font-black tracking-tight">Кирилл → Латин хөрвүүлэх</h1>
+      <p class="text-foreground/80">Kirilleer нь голчлон латинаас кирилл рүү хөрвүүлдэг. Кириллээс латин руу буцаах шаардлагатай бол энд нийтлэг аргуудыг тайлбарлав.</p>
+      <ul class="list-disc pl-6 space-y-2">
+        <li>Нийтлэг дүрэм ба жишээ</li>
+        <li>Орфографийн онцлог, хоёр авиа бүхий галиг</li>
+        <li>Гар утас, компьютерт тохируулах зөвлөмж</li>
+      </ul>
+      <a href="/" class="underline font-medium">Латинаас Кирилл рүү хөрвүүлэгч рүү очих</a>
+    </div>
+  </div>
+</Layout>
+
+

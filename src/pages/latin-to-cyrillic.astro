@@ -1,0 +1,38 @@
+---
+import Layout from '@/layouts/Layout.astro'
+
+const title = "Latin to Mongolian Cyrillic Converter — Кирилл хөрвүүлэгч | Kirilleer"
+const description = "Convert Mongolian written with Latin letters to Cyrillic instantly. Free, fast, no sign-in."
+const ogImage = "/og-image.svg"
+
+const siteUrl = Astro.url.toString()
+const jsonLd = {
+  "@context": "https://schema.org",
+  "@type": "WebPage",
+  name: title,
+  url: siteUrl,
+  inLanguage: "en",
+  description
+}
+---
+
+<Layout title={title} description={description} ogImage={ogImage}>
+  <Fragment slot="head">
+    <script type="application/ld+json" set:html={JSON.stringify(jsonLd)} />
+  </Fragment>
+
+  <div class="min-h-dvh px-4 sm:px-6 pt-24 sm:pt-32 pb-10">
+    <div class="max-w-3xl mx-auto space-y-6">
+      <h1 class="text-3xl sm:text-5xl font-black tracking-tight">Latin → Mongolian Cyrillic</h1>
+      <p class="text-foreground/80">Use the homepage tool to convert instantly. This page explains how Kirilleer works and why it preserves Mongolian orthography accurately.</p>
+      <ul class="list-disc pl-6 space-y-2">
+        <li>Fast client-side conversion</li>
+        <li>Case preservation and digraph handling</li>
+        <li>Copy and paste friendly</li>
+      </ul>
+      <a href="/" class="underline font-medium">Open the converter</a>
+    </div>
+  </div>
+</Layout>
+
+

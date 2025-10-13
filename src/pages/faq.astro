@@ -1,0 +1,49 @@
+---
+import Layout from '@/layouts/Layout.astro'
+
+const title = "Тусламж ба Түгээмэл асуултууд (FAQ) | Kirilleer"
+const description = "Kirilleer хөрвүүлэгчийн тухай түгээмэл асуултууд ба хариултууд."
+const ogImage = "/og-image.svg"
+
+const faqs = [
+  { q: 'Kirilleer яаж ажилладаг вэ?', a: 'Клиент талд дүрмийн дагуу латин бичгийг кирилл болгон хувиргадаг.' },
+  { q: 'Мэдээлэл хадгалдаг уу?', a: 'Таны оруулсан текстийг серверт хадгалдаггүй.' },
+  { q: 'Утсанд ашиглаж болох уу?', a: 'Тийм, бүх төрлийн төхөөрөмж дээр ажиллана.' }
+]
+
+const siteUrl = Astro.url.toString()
+const jsonLd = {
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  mainEntity: faqs.map((f) => ({
+    "@type": "Question",
+    name: f.q,
+    acceptedAnswer: { "@type": "Answer", text: f.a }
+  }))
+}
+---
+
+<Layout title={title} description={description} ogImage={ogImage}>
+  <Fragment slot="head">
+    <script type="application/ld+json" set:html={JSON.stringify(jsonLd)} />
+  </Fragment>
+
+  <div class="min-h-dvh px-4 sm:px-6 pt-24 sm:pt-32 pb-10">
+    <div class="max-w-3xl mx-auto space-y-6">
+      <h1 class="text-3xl sm:text-5xl font-black tracking-tight">FAQ</h1>
+      <div class="space-y-4">
+        {faqs.map((f) => (
+          <details class="rounded-md border border-border bg-card p-4">
+            <summary class="font-medium">{f.q}</summary>
+            <p class="mt-2 text-foreground/80">{f.a}</p>
+          </details>
+        ))}
+      </div>
+      <div>
+        <a href="/" class="underline font-medium">Хөрвүүлэгч рүү буцах</a>
+      </div>
+    </div>
+  </div>
+</Layout>
+
+

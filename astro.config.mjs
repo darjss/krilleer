@@ -11,7 +11,7 @@ import sitemap from '@astrojs/sitemap';
 
 // https://astro.build/config
 export default defineConfig({
-  site: process.env.SITE_URL || 'https://example.com',
+  site: process.env.SITE_URL || 'https://kirilleer.com',
   adapter: cloudflare({
     platformProxy: {
       enabled: true
@@ -21,6 +21,8 @@ export default defineConfig({
   }),
 
   integrations: [solidJs(), sitemap()],
+
+  trailingSlash: 'never',
 
   vite: {
     plugins: [tailwindcss()]

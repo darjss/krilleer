@@ -4,10 +4,11 @@ import { transliterateLatinToCyrillic, reverseTransliterateCyrillicToLatin } fro
 import { useLocalStorage } from "@/hooks/useLocalStorage"
 import { createSignal, createEffect, Switch, Match } from "solid-js"
 import { TextField, TextFieldTextArea as TextArea } from "./ui/text-field"
+declare const posthog: any
 
 export default function Converter() {
     const [inputText, setInputText] = useLocalStorage("inputText", "")
-    const [copied, setCopied] = createSignal(false)
+    const [_copied, setCopied] = createSignal(false)
     const [zenMode, setZenMode] = useLocalStorage("zenMode", false)
 
     createEffect(() => {
@@ -29,6 +30,7 @@ export default function Converter() {
             await navigator.clipboard.writeText(inputText())
             setCopied(true)
             setTimeout(() => setCopied(false), 2000)
+            try { posthog?.capture?.('copy_text', { length: inputText().length }) } catch {}
         } catch (err) {
             console.error("Failed to copy text: ", err)
         }
@@ -39,6 +41,7 @@ export default function Converter() {
             const text = await navigator.clipboard.readText()
             const asLatin = reverseTransliterateCyrillicToLatin(text)
             setInputText(transliterateLatinToCyrillic(asLatin, { preserveCase: true }))
+            try { posthog?.capture?.('paste_text', { length: text.length }) } catch {}
         } catch (err) {
             console.error("Failed to paste text: ", err)
         }
@@ -46,6 +49,7 @@ export default function Converter() {
 
     const handleClear = () => {
         setInputText("")
+        try { posthog?.capture?.('clear_text') } catch {}
     }
     console.log(zenMode())
     const handleZenMode = () => {
@@ -60,6 +64,7 @@ export default function Converter() {
         const asLatin = reverseTransliterateCyrillicToLatin(raw)
         const asCyr = transliterateLatinToCyrillic(asLatin, { preserveCase: true })
         setInputText(asCyr)
+        try { posthog?.capture?.('input_changed', { length: asCyr.length }) } catch {}
         setTimeout(() => {
             textarea.selectionStart = cursorPos
             textarea.selectionEnd = cursorPos
