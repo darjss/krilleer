@@ -98,13 +98,13 @@ export default function Converter() {
                         <h2 class="text-base sm:text-lg font-bold tracking-tight">Латин текст оруулна уу</h2>
                         <div class="flex flex-wrap gap-2">
                             <Button variant="outline" size="sm" onClick={handleCopy} class="text-xs">
-                                Хуулах
+                                Copy
                             </Button>
                             <Button variant="outline" size="sm" onClick={handlePaste} class="text-xs">
-                                Буулгах
+                                Paste
                             </Button>
                             <Button variant="outline" size="sm" onClick={handleClear} class="text-xs">
-                                Арилгах
+                                Clear
                             </Button>
                             <Button variant="outline" size="sm" onClick={handleZenMode} class="text-xs">
                                 Zen

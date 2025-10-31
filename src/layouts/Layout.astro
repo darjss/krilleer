@@ -33,8 +33,7 @@ const ogImageHeight = 630;
 
 			try {
 				const stored = localStorage.getItem('theme');
-				const systemPrefersDark = window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches;
-				const isDark = stored ? stored === 'dark' : systemPrefersDark;
+				const isDark = stored ? stored === 'dark' : false;
 				if (isDark) document.documentElement.classList.add('dark');
 				else document.documentElement.classList.remove('dark');
 			} catch (e) {}
@@ -68,7 +67,6 @@ const ogImageHeight = 630;
 
 		<div class="pointer-events-none fixed inset-0 -z-10 bg-[radial-gradient(circle_at_1px_1px,rgba(0,0,0,0.35)_1px,transparent_0)] bg-[size:20px_20px] dark:bg-[radial-gradient(circle_at_1px_1px,rgba(255,255,255,0.12)_1px,transparent_0)]" aria-hidden="true"></div>
 		<div class="pointer-events-none fixed inset-0 -z-10 bg-[radial-gradient(800px_400px_at_50%_-120px,rgba(255,200,88,0.14),transparent)] dark:bg-[radial-gradient(800px_400px_at_50%_-120px,rgba(255,180,50,0.16),transparent)]"></div>
-		<div class="pointer-events-none fixed inset-0 -z-10 bg-[linear-gradient(90deg,rgba(0,0,0,0.04)_1px,transparent_1px),linear-gradient(0deg,rgba(0,0,0,0.04)_1px,transparent_1px)] bg-[size:22px_22px] dark:bg-[linear-gradient(90deg,rgba(255,255,255,0.06)_1px,transparent_1px),linear-gradient(0deg,rgba(255,255,255,0.06)_1px,transparent_1px)]"></div>
 		<div class="pointer-events-none fixed inset-0 -z-10 overflow-hidden" style={{
 			background: "radial-gradient(circle at 1px 1px, rgba(0, 0, 0, 0.35) 1px, transparent 0)",
 			backgroundSize: "20px 20px"
