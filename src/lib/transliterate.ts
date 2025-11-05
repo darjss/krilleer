@@ -34,7 +34,7 @@ const MULTIGRAPHS: Record<string, string> = {
   ya: "я",
   ye: "е",
   ph: "ф",
-  // add more if needed
+  yy: "й",
 }
 
 const SINGLE_MAP: Record<string, string> = {
@@ -48,7 +48,7 @@ const SINGLE_MAP: Record<string, string> = {
   z: "з",
   i: "и", // special-case handled in runtime: may become 'й'
   j: "ж",
-  y: "й",
+  y: "ы",
   k: "к",
   l: "л",
   m: "м",
@@ -89,7 +89,7 @@ export const LATIN_TO_CYRILLIC_DISPLAY_MAPPINGS: LatinToCyrillicMapping[] = (() 
   for (const [latin, cyrillic] of Object.entries(SINGLE_MAP)) {
     if (EXCLUDED_FROM_DISPLAY.has(latin)) continue
     const mapping: LatinToCyrillicMapping = { latin, cyrillic }
-    if (latin === "i") mapping.note = "Эгшгийн дараа → й"
+
     pairs.push(mapping)
   }
 
@@ -248,7 +248,7 @@ const CYR_TO_LAT: Record<string, string> = {
   "э": "e",
   "з": "z",
   "и": "i",
-  "й": "y",
+  "й": "yy",
   "к": "k",
   "л": "l",
   "м": "m",
