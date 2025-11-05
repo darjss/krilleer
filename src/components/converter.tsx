@@ -10,6 +10,7 @@ export default function Converter() {
     const [inputText, setInputText] = useLocalStorage("inputText", "")
     const [_copied, setCopied] = createSignal(false)
     const [zenMode, setZenMode] = useLocalStorage("zenMode", false)
+    let textareaRef: HTMLTextAreaElement | undefined
 
     createEffect(() => {
         const handleKeyDown = (e: KeyboardEvent) => {
@@ -40,7 +41,18 @@ export default function Converter() {
         try {
             const text = await navigator.clipboard.readText()
             const asLatin = reverseTransliterateCyrillicToLatin(text)
-            setInputText(transliterateLatinToCyrillic(asLatin, { preserveCase: true }))
+            const asCyr = transliterateLatinToCyrillic(asLatin, { preserveCase: true })
+            
+            if (textareaRef) {
+                const cursorPos = textareaRef.selectionStart
+                const currentValue = textareaRef.value
+                const newValue = currentValue.slice(0, cursorPos) + asCyr + currentValue.slice(textareaRef.selectionEnd)
+                textareaRef.value = newValue
+                textareaRef.selectionStart = textareaRef.selectionEnd = cursorPos + asCyr.length
+                setInputText(newValue)
+            } else {
+                setInputText(asCyr)
+            }
             try { posthog?.capture?.('paste_text', { length: text.length }) } catch {}
         } catch (err) {
             console.error("Failed to paste text: ", err)
@@ -88,6 +100,7 @@ export default function Converter() {
                             onInput={handleInput}
                             class="w-full h-full resize-none text-base leading-relaxed"
                             autofocus
+                            ref={textareaRef}
                         />
                     </TextField>
                 </div>
@@ -118,6 +131,7 @@ export default function Converter() {
                                 value={inputText()}
                                 onInput={handleInput}
                                 class="min-h-[220px] resize-none text-base leading-relaxed"
+                                ref={textareaRef}
                             />
                         </TextField>
                     </div>

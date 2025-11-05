@@ -65,8 +65,8 @@ const SINGLE_MAP: Record<string, string> = {
   q: "ө", // explicit mapping for ө (user requested)
   w: "ү", // explicit mapping for ү (user requested)
   x: "кс",
-  "'": "ь",
-  "`": "ь",
+  "'": "ъ",
+  "`": "ъ",
   ".": ".",
   ",": ",",
   " ": " ",
@@ -265,7 +265,8 @@ const CYR_TO_LAT: Record<string, string> = {
   "ө": "q",
   "ү": "w",
   "ы": "y",
-  "ь": "'",
+  "ь": "ь",
+  "ъ": "'",
 }
 
 export function reverseTransliterateCyrillicToLatin(input: string): string {
