@@ -38,39 +38,39 @@ const MULTIGRAPHS: Record<string, string> = {
 }
 
 const SINGLE_MAP: Record<string, string> = {
-  a: "а",
-  b: "б",
-  v: "в",
-  g: "г",
-  d: "д",
-  e: "э", // plain e -> э (ye/je handled in multigraphs)
-  ë: "ё",
-  z: "з",
-  i: "и", // special-case handled in runtime: may become 'й'
-  j: "ж",
-  y: "ы",
-  k: "к",
-  l: "л",
-  m: "м",
-  n: "н",
-  o: "о",
-  p: "п",
-  r: "р",
-  s: "с",
-  t: "т",
-  u: "у",
-  f: "ф",
-  h: "х",
-  c: "ц",
-  q: "ө", // explicit mapping for ө (user requested)
-  w: "ү", // explicit mapping for ү (user requested)
-  x: "кс",
-  "'": "ъ",
-  "`": "ъ",
-  ".": ".",
-  ",": ",",
-  " ": " ",
-}
+	a: "а",
+	b: "б",
+	v: "в",
+	g: "г",
+	d: "д",
+	e: "э", // plain e -> э (ye/je handled in multigraphs)
+	ë: "ё",
+	z: "з",
+	i: "и", // special-case handled in runtime: may become 'й'
+	j: "ж",
+	y: "ы",
+	k: "к",
+	l: "л",
+	m: "м",
+	n: "н",
+	o: "о",
+	p: "п",
+	r: "р",
+	s: "с",
+	t: "т",
+	u: "у",
+	f: "ф",
+	h: "х",
+	c: "ц",
+	q: "ө", // explicit mapping for ө (user requested)
+	w: "ү", // explicit mapping for ү (user requested)
+	x: "кс",
+	"'": "ь",
+	";": "ъ",
+	".": ".",
+	",": ",",
+	" ": " ",
+};
 
 // Public mapping pairs for UI display (Latin → Cyrillic)
 export type LatinToCyrillicMapping = { latin: string; cyrillic: string; note?: string }
