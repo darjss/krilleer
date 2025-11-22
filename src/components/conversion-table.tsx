@@ -78,6 +78,10 @@ export default function ConversionTable() {
                             <span class="font-mono">Esc</span>
                             <span>Zen горимоос гарах</span>
                         </div>
+                        <div class="flex justify-between items-center text-sm">
+                            <span class="font-mono">Ctrl + Shift + X</span>
+                            <span>Латин үг хадгалах горим</span>
+                        </div>
                     </div>
                 </CollapsibleContent>
             </Collapsible>

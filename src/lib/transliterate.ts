@@ -295,3 +295,13 @@ export function reverseTransliterateCyrillicToLatin(input: string): string {
 // console.log(transliterateLatinToCyrillic("bayar")); // баяр
 // console.log(transliterateLatinToCyrillic("bayar", { preserveCase: true }));
 // console.log(transliterateLatinToCyrillic("w q", { preserveCase: false })); // ү ө
+
+/**
+ * Applies the full transliteration pipeline:
+ * 1. Reverse transliterate Cyrillic -> Latin (to handle mixed/edited input)
+ * 2. Transliterate Latin -> Cyrillic
+ */
+export function applyTransliteration(input: string): string {
+  const asLatin = reverseTransliterateCyrillicToLatin(input)
+  return transliterateLatinToCyrillic(asLatin, { preserveCase: true })
+}
